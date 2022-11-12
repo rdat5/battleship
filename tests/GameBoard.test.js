@@ -34,3 +34,16 @@ test('Gameboard keeps track of missed shots', () => {
         [2, 2]
     ]);
 });
+
+test('Gameboard can report if all ships have been sunk', () => {
+    const testBoard = Gameboard(4);
+    const shpA = Ship(2);
+    const shpB = Ship(2);
+    testBoard.placeShip(1, 1, shpA, true);
+    testBoard.placeShip(2, 3, shpB, false);
+    testBoard.receiveAttack(1, 1);
+    testBoard.receiveAttack(1, 2);
+    testBoard.receiveAttack(2, 3);
+    testBoard.receiveAttack(3, 3);
+    expect(testBoard.areShipsAllSunk()).toBe(true);
+});
