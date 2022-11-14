@@ -29,6 +29,43 @@ body {
 
 .page-main {
     background-color: #dcedc8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-container {
+    background-color: red;
+    height: 90%;
+    width: 90%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.p1Container, .p2Container {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.p1Container {
+    background-color: green;
+}
+
+.p2Container {
+    background-color: gray;
+}
+
+.p1Board, .p2Board {
+    width: 50vh;
+    height: 50vh;
+    position: relative;
+}
+.p1Board {
+    background-color: pink;
+}
+.p2Board {
+    background-color: lightblue;
 }
 
 .page-footer {
