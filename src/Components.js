@@ -1,4 +1,9 @@
-function drawGrid(board) {
+function containsArray(arr1, arr2) {
+    return arr1[0] == arr2[0] && arr1[1] == arr2[1];
+ }
+
+function drawGrid(player) {
+    let board = player.gameBoard.board;
     const gridContainer = document.createElement('div');
     gridContainer.style.height = '100%';
     gridContainer.style.width = '100%';
@@ -13,6 +18,9 @@ function drawGrid(board) {
             }
             else {
                 cell.style.backgroundColor = 'grey';
+            }
+            if (player.gameBoard.receivedShots.some(r => containsArray(r, [j, i]))) {
+                cell.textContent = 'X';
             }
             gridContainer.appendChild(cell);
         }

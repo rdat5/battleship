@@ -14,6 +14,7 @@ const Gameboard = (boardSize = 10) => {
     return {
         board: createBoard(boardSize),
         missedShots: [],
+        receivedShots: [],
         placedShips: [],
         placeShip(x, y, ship, isVertical) {
             if (isVertical){
@@ -35,6 +36,7 @@ const Gameboard = (boardSize = 10) => {
             else {
                 this.missedShots.push([x, y]);
             }
+            this.receivedShots.push([x, y]);
         },
         areShipsAllSunk() {
             return this.placedShips.every((s) => {
