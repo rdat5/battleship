@@ -3,7 +3,7 @@ const Ship = (length) => {
         length: length,
         timesHit: 0,
         hit() {
-            timesHit += 1;
+            this.timesHit += 1;
         },
         isSunk() {
             return this.timesHit == this.length;
