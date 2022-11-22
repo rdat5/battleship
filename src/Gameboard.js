@@ -30,12 +30,21 @@ const Gameboard = (size) => {
         getCell(x, y) {
             return this.board[y][x];
         },
-        placeShip(ship, x, y, isVertical) {
-            for (let i = 0; i < ship.length; i++) {
-                this.getCell(x + i, y).contents = ship;
+        placeShip(shipIndex, x, y, isVertical) {
+            if (isVertical)
+            {
+                for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                    this.getCell(x, y + i).contents = this.ships[shipIndex];
+                }
+            }
+            else {
+                for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                    this.getCell(x + i, y).contents = this.ships[shipIndex];
+                }
             }
         },
         printBoard() {
+            let finalString = "";
             for (let i = 0; i < this.board.length; i++) {
                 let row = ""
                 for (let j = 0; j < this.board.length; j++) {
@@ -46,14 +55,11 @@ const Gameboard = (size) => {
                         row += '[O]';
                     }
                 }
-                console.log(row);
+                finalString += `${row}\n`;
             }
+            return finalString;
         }
     }
 }
 
-const testGameBoard = Gameboard(10);
-
-testGameBoard.placeShip(testGameBoard.ships[0], 3, 5, false);
-
-testGameBoard.printBoard();
+export default Gameboard;
