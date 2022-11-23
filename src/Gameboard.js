@@ -21,9 +21,7 @@ const Gameboard = (size) => {
         }
         return newGrid;
     }
-
-
-
+    
     return {
         board: createGrid(size),
         ships: [Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)],
@@ -42,6 +40,12 @@ const Gameboard = (size) => {
                     this.getCell(x + i, y).contents = this.ships[shipIndex];
                 }
             }
+        },
+        recieveAttack(x, y) {
+            if (this.getCell(x, y).contents) {
+                this.getCell(x, y).contents.hit();
+            }
+            this.getCell(x, y).isStruck = true;
         },
         printBoard() {
             let finalString = "";

@@ -7,7 +7,17 @@ test("Gameboard can place ships at specific coordinates", () => {
 
     console.log(testGameboard.printBoard());
 
-    // expect(testGameboard.getCell(1, 1).contents).toBe(testGameboard.ships[0]);
-    // expect(testGameboard.getCell(1, 2).contents).toBe(testGameboard.ships[4]);
-    // expect(testGameboard.getCell(3, 3).contents).toBe(null);
+    expect(testGameboard.getCell(1, 1).contents).toBe(testGameboard.ships[0]);
+    expect(testGameboard.getCell(5, 1).contents).toBe(testGameboard.ships[0]);
+    expect(testGameboard.getCell(3, 3).contents).toBe(null);
 });
+
+test("Gameboard can receive an attack", () => {
+    const testGameboard = Gameboard(10);
+    testGameboard.placeShip(0, 1, 1, false);
+
+    testGameboard.recieveAttack(2, 1);
+
+    expect(testGameboard.ships[0].timesHit).toBe(1);
+    expect(testGameboard.getCell(2, 1).isStruck).toBe(true);
+})
