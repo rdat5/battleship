@@ -56,10 +56,20 @@ const Gameboard = (size) => {
                 let row = ""
                 for (let j = 0; j < this.board.length; j++) {
                     if (this.getCell(j, i).contents == null) {
-                        row += '[ ]';
+                        if (this.getCell(j, i).isStruck) {
+                            row += '[X]';
+                        }
+                        else {
+                            row += '[ ]';
+                        }
                     }
                     else {
-                        row += '[O]';
+                        if (this.getCell(j, i).isStruck) {
+                            row += '[ⓧ]';
+                        }
+                        else {
+                            row += '[O]';
+                        }
                     }
                 }
                 finalString += `${row}\n`;
