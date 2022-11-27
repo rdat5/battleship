@@ -1,18 +1,10 @@
-import Gameboard from "./Gameboard.js";
-
 class Player {
     constructor(isCPU = false) {
         this.isCPU = isCPU;
-        this.gameboard = Gameboard(10);
-        this.opponentBoard = null;
-    }
-    
-    setOpponentBoard(opponent) {
-        this.opponentBoard = opponent.gameboard;
     }
 
-    getPossibleTargets() {
-        let board = this.opponentBoard.board;
+    getPossibleTargets(gboard) {
+        let board = gboard.board;
         let newTargets = [];
 
         board.forEach(row => {
@@ -29,6 +21,10 @@ class Player {
         });
 
         return newTargets;
+    }
+
+    getRandomTarget(gboard) {
+
     }
 }
 
