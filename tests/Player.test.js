@@ -1,7 +1,7 @@
 import Player from "../src/Player.js";
 import Gameboard from "../src/Gameboard.js";
 
-test.only("Player can see all available targets on opponent's board", () => {
+test("Player can see all available targets on opponent's board", () => {
     const testP1 = new Player();
     const p2Board = Gameboard(2);
 
@@ -10,3 +10,9 @@ test.only("Player can see all available targets on opponent's board", () => {
     );
 });
 
+test.only("Player can choose a random available target", () => {
+    const testP1 = new Player();
+    const p2Board = Gameboard(10);
+
+    console.log(testP1.pickRandomTarget(p2Board));
+});

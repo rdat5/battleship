@@ -23,8 +23,10 @@ class Player {
         return newTargets;
     }
 
-    getRandomTarget(gboard) {
+    pickRandomTarget(gboard) {
+        let possibleTargets = this.getPossibleTargets(gboard);
 
+        return possibleTargets[Math.floor(Math.random() * possibleTargets.length)];
     }
 }
 
