@@ -26,6 +26,9 @@ function renderBoardGrid(gboard, clickFn) {
                     cellElem.style.backgroundColor = 'black';
                     cellElem.textContent = '💥';
                 }
+                else {
+                    cellElem.addEventListener('click', clickFn)
+                }
             }
             else {
                 cellElem.style.backgroundColor = 'lightsteelblue';
@@ -33,10 +36,13 @@ function renderBoardGrid(gboard, clickFn) {
                     cellElem.style.backgroundColor = 'darkcyan';
                     cellElem.textContent = '❌';
                 }
+                else {
+                    cellElem.addEventListener('click', clickFn)
+                }
             }
 
             // Cell click function
-            cellElem.addEventListener('click', clickFn)
+            // cellElem.addEventListener('click', clickFn)
 
             gridContainer.appendChild(cellElem);
 
