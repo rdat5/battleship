@@ -5,7 +5,11 @@ const p2BoardElem = document.querySelector('.p2Board');
 
 const game = new Game();
 
-function renderBoardGrid(gboard) {
+function onCellClick() {
+    console.log('you clicked!');
+}
+
+function renderBoardGrid(gboard, clickFn) {
     const gridContainer = document.createElement('div');
     let boardData = gboard.board;
 
@@ -31,6 +35,9 @@ function renderBoardGrid(gboard) {
                 }
             }
 
+            // Cell click function
+            cellElem.addEventListener('click', clickFn)
+
             gridContainer.appendChild(cellElem);
 
         }
@@ -49,6 +56,6 @@ game.p1Gameboard.placeShip(0, 3, 5);
 game.p1Gameboard.recieveAttack(2, 3);
 game.p1Gameboard.recieveAttack(5, 5);
 
-p1BoardElem.appendChild(renderBoardGrid(game.p1Gameboard));
+p1BoardElem.appendChild(renderBoardGrid(game.p1Gameboard, onCellClick));
 
 // console.log(game.p1Gameboard.board[0][2]);
