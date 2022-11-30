@@ -52,10 +52,20 @@ function renderBoardGrid(gboard, clickFn) {
     return gridContainer;
 };
 
+// Predetermined coordinates before implementing player created ones
 game.p1Gameboard.placeShip(0, 3, 5);
-game.p1Gameboard.recieveAttack(2, 3);
-game.p1Gameboard.recieveAttack(5, 5);
+game.p1Gameboard.placeShip(1, 2, 1);
+game.p1Gameboard.placeShip(2, 1, 6, true);
+game.p1Gameboard.placeShip(3, 8, 1, true);
+game.p1Gameboard.placeShip(4, 5, 7, true);
+
+game.p2Gameboard.placeShip(0, 0, 8);
+game.p2Gameboard.placeShip(1, 3, 3, true);
+game.p2Gameboard.placeShip(2, 8, 0, true);
+game.p2Gameboard.placeShip(3, 7, 7, false);
+game.p2Gameboard.placeShip(4, 0, 0, true);
 
 p1BoardElem.appendChild(renderBoardGrid(game.p1Gameboard, onCellClick));
+p2BoardElem.appendChild(renderBoardGrid(game.p2Gameboard, onCellClick));
 
 // console.log(game.p1Gameboard.board[0][2]);
