@@ -5,6 +5,12 @@ const p2BoardElem = document.querySelector('.p2Board');
 
 const game = new Game();
 
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
+
 function onCellClick() {
     console.log('you clicked!');
 }
