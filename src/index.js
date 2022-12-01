@@ -45,6 +45,7 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
                 if (cellData.isStruck) {
                     cellElem.style.backgroundColor = 'black';
                     cellElem.textContent = '💥';
+                    cellElem.style.fontSize = '1.5em';
                 }
                 else {
                     cellElem.addEventListener('click', () => {
