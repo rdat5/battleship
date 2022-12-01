@@ -11,11 +11,25 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function onCellClick() {
-    console.log('you clicked!');
+function onCellClick(boardNum, gboard, cellD) {
+    if (boardNum == 1) {
+        // update data
+        game.p1Gameboard.recieveAttack(cellD.x, cellD.y);
+        // render
+        removeAllChildNodes(p1BoardElem);
+        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+    }
+    else if (boardNum == 2) {
+        // update data
+        game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
+        // render
+        removeAllChildNodes(p2BoardElem);
+        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
+    }
+    console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
 }
 
-function renderBoardGrid(gboard, clickFn) {
+function renderBoardGrid(boardNum, gboard, clickFn) {
     const gridContainer = document.createElement('div');
     let boardData = gboard.board;
 
@@ -33,7 +47,9 @@ function renderBoardGrid(gboard, clickFn) {
                     cellElem.textContent = '💥';
                 }
                 else {
-                    cellElem.addEventListener('click', clickFn)
+                    cellElem.addEventListener('click', () => {
+                        clickFn(boardNum, gboard, cellData);
+                    });
                 }
             }
             else {
@@ -43,7 +59,9 @@ function renderBoardGrid(gboard, clickFn) {
                     cellElem.textContent = '❌';
                 }
                 else {
-                    cellElem.addEventListener('click', clickFn)
+                    cellElem.addEventListener('click', () => {
+                        clickFn(boardNum, gboard, cellData);
+                    });
                 }
             }
 
@@ -77,7 +95,7 @@ game.p2Gameboard.placeShip(2, 8, 0, true);
 game.p2Gameboard.placeShip(3, 7, 7, false);
 game.p2Gameboard.placeShip(4, 0, 0, true);
 
-p1BoardElem.appendChild(renderBoardGrid(game.p1Gameboard, onCellClick));
-p2BoardElem.appendChild(renderBoardGrid(game.p2Gameboard, onCellClick));
+p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
 
 // console.log(game.p1Gameboard.board[0][2]);
