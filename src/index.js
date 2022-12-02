@@ -11,64 +11,69 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function onCellClick(boardNum, gboard, cellD) {
+function onCellClick(boardNum, gboard, cellD, hidden = false) {
     if (boardNum == 1) {
         // update data
         game.p1Gameboard.recieveAttack(cellD.x, cellD.y);
         // render
         removeAllChildNodes(p1BoardElem);
-        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick, hidden));
     }
     else if (boardNum == 2) {
         // update data
         game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
         // render
         removeAllChildNodes(p2BoardElem);
-        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
+        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, hidden));
     }
     console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
 }
 
-function renderBoardGrid(boardNum, gboard, clickFn) {
+function renderBoardGrid(boardNum, gboard, clickFn, hidden = false) {
     const gridContainer = document.createElement('div');
     let boardData = gboard.board;
 
     for (let row = 0; row < boardData.length; row++) {
         for (let col = 0; col < boardData[row].length; col++) {
             let cellData = gboard.getCell(col, row);
+            let cellBGColor = '';
             const cellElem = document.createElement('button');
 
             cellElem.style.height = '100%';
             cellElem.style.borderWidth = '1px';
+
+            // Add click event listener if not struck already
+            cellBGColor = 'lightsteelblue';
+            if (!cellData.isStruck) {
+                cellElem.addEventListener('click', () => {
+                    clickFn(boardNum, gboard, cellData, hidden);
+                });
+            }
+            
+            // Color ships
             if (cellData.contents) {
-                cellElem.style.backgroundColor = 'grey';
                 if (cellData.isStruck) {
-                    cellElem.style.backgroundColor = 'black';
+                    cellBGColor = 'black';
                     cellElem.textContent = '💥';
                     cellElem.style.fontSize = '1.5em';
                 }
                 else {
-                    cellElem.addEventListener('click', () => {
-                        clickFn(boardNum, gboard, cellData);
-                    });
+                    cellBGColor = 'grey';
                 }
             }
             else {
-                cellElem.style.backgroundColor = 'lightsteelblue';
+                // Color water
                 if (cellData.isStruck) {
-                    cellElem.style.backgroundColor = 'darkcyan';
+                    cellBGColor = 'darkcyan';
                     cellElem.textContent = '❌';
-                }
-                else {
-                    cellElem.addEventListener('click', () => {
-                        clickFn(boardNum, gboard, cellData);
-                    });
                 }
             }
 
-            // Cell click function
-            // cellElem.addEventListener('click', clickFn)
+            if (hidden && !cellData.isStruck) {
+                cellBGColor = 'darkgrey';
+            }
 
+            cellElem.style.backgroundColor = cellBGColor;
             gridContainer.appendChild(cellElem);
 
         }
@@ -97,6 +102,6 @@ game.p2Gameboard.placeShip(3, 7, 7, false);
 game.p2Gameboard.placeShip(4, 0, 0, true);
 
 p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
-p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
+p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
 
 // console.log(game.p1Gameboard.board[0][2]);
