@@ -44,7 +44,7 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
 
             // Add click event listener if not struck already
             cellBGColor = 'lightsteelblue';
-            if (!cellData.isStruck) {
+            if (!cellData.isStruck && boardNum == 2) {
                 cellElem.addEventListener('click', () => {
                     clickFn(boardNum, gboard, cellData);
                 });
