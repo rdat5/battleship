@@ -18,6 +18,12 @@ function onCellClick(cellD) {
     removeAllChildNodes(p2BoardElem);
     p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
     console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
+
+    // Player 2 attack and render result
+    let cpuAttack = game.p2.pickRandomTarget(game.p1Gameboard);
+    game.p1Gameboard.recieveAttack(cpuAttack.x, cpuAttack.y);
+    removeAllChildNodes(p1BoardElem);
+    p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
 }
 
 function renderBoardGrid(boardNum, gboard, clickFn) {
