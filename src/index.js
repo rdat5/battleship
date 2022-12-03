@@ -11,21 +11,12 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function onCellClick(boardNum, gboard, cellD) {
-    if (boardNum == 1) {
-        // update data
-        game.p1Gameboard.recieveAttack(cellD.x, cellD.y);
-        // render
-        removeAllChildNodes(p1BoardElem);
-        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
-    }
-    else if (boardNum == 2) {
-        // update data
-        game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
-        // render
-        removeAllChildNodes(p2BoardElem);
-        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
-    }
+function onCellClick(cellD) {
+    // update data
+    game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
+    // render
+    removeAllChildNodes(p2BoardElem);
+    p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
     console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
 }
 
@@ -46,7 +37,7 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
             cellBGColor = 'lightsteelblue';
             if (!cellData.isStruck && boardNum == 2) {
                 cellElem.addEventListener('click', () => {
-                    clickFn(boardNum, gboard, cellData);
+                    clickFn(cellData);
                 });
             }
             
