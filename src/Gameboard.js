@@ -24,7 +24,7 @@ const Gameboard = (size) => {
     
     return {
         board: createGrid(size),
-        ships: [Ship(5), Ship(4), Ship(3), Ship(3), Ship(2)],
+        ships: [Ship(5, 'Carrier'), Ship(4, 'Battleship'), Ship(3, 'Destroyer'), Ship(3, 'Submarine'), Ship(2, 'Patrol Boat')],
         getCell(x, y) {
             return this.board[y][x];
         },

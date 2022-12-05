@@ -2,6 +2,8 @@ import Game from "./Game.js";
 
 const p1BoardElem = document.querySelector('.p1Board');
 const p2BoardElem = document.querySelector('.p2Board');
+const p1ShipsSunkList = document.querySelector('.p1ShipsSunk');
+const p2ShipsSunkList = document.querySelector('.p2ShipsSunk');
 
 const game = new Game();
 
@@ -17,13 +19,31 @@ function onCellClick(cellD) {
     // render
     removeAllChildNodes(p2BoardElem);
     p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
-    console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
-
+    
     // Player 2 attack and render result
     let cpuAttack = game.p2.pickRandomTarget(game.p1Gameboard);
     game.p1Gameboard.recieveAttack(cpuAttack.x, cpuAttack.y);
+    // render
     removeAllChildNodes(p1BoardElem);
     p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+
+    updateShipSunkList();
+    console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
+}
+
+function updateShipSunkList() {
+    p1ShipsSunkList.textContent = '';
+    p2ShipsSunkList.textContent = '';
+    game.p1Gameboard.ships.forEach(ship => {
+        if (ship.isSunk()) {
+            p1ShipsSunkList.textContent += `🛳️${ship.shipName}(${ship.length})`;
+        }
+    })
+    game.p2Gameboard.ships.forEach(ship => {
+        if (ship.isSunk()) {
+            p2ShipsSunkList.textContent += `🛳️${ship.shipName}(${ship.length})`;
+        }
+    })
 }
 
 function renderBoardGrid(boardNum, gboard, clickFn) {
@@ -66,9 +86,9 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
                 }
             }
 
-            if (boardNum == 2 && !cellData.isStruck) {
-                cellBGColor = 'darkgrey';
-            }
+            // if (boardNum == 2 && !cellData.isStruck) {
+            //     cellBGColor = 'darkgrey';
+            // }
 
             cellElem.style.backgroundColor = cellBGColor;
             gridContainer.appendChild(cellElem);
@@ -98,7 +118,10 @@ game.p2Gameboard.placeShip(2, 8, 0, true);
 game.p2Gameboard.placeShip(3, 7, 7, false);
 game.p2Gameboard.placeShip(4, 0, 0, true);
 
+// Initial Render
+
 p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
 p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
+updateShipSunkList();
 
 // console.log(game.p1Gameboard.board[0][2]);

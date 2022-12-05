@@ -1,7 +1,8 @@
-const Ship = (length) => {
+const Ship = (length, shipName = '') => {
     return {
         length: length,
         timesHit: 0,
+        shipName: shipName,
         hit() {
             this.timesHit += 1;
         },
