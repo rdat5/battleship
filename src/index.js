@@ -21,13 +21,19 @@ function gameOverSetup() {
 
     if (p1LostState && !p2LostState) {
         // if p1 ships are all sunk, but not p2
+        p1Name.textContent += ' LOSES';
+        p2Name.textContent += ' WINS';
         console.log('p1 lost');
     }
     else if (p2LostState && !p1LostState) {
         // if p2 ships are all sunk, but not p1
+        p1Name.textContent += ' WINS';
+        p2Name.textContent += ' LOSES';
         console.log('p2 lost');
     } else {
         // draw
+        p1Name.textContent += ' DRAWS';
+        p2Name.textContent += ' DRAWS';
         console.log('draw');
     }
 }
