@@ -48,7 +48,7 @@ const Gameboard = (size) => {
             this.getCell(x, y).isStruck = true;
         },
         areAllShipsSunk() {
-            return this.ships.every(ship => ship.isSunk);
+            return this.ships.every(ship => ship.isSunk());
         },
         printBoard() {
             let finalString = "";

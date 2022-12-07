@@ -4,6 +4,8 @@ const p1BoardElem = document.querySelector('.p1Board');
 const p2BoardElem = document.querySelector('.p2Board');
 const p1ShipsSunkList = document.querySelector('.p1ShipsSunk');
 const p2ShipsSunkList = document.querySelector('.p2ShipsSunk');
+const p1Name = document.querySelector('.p1Name');
+const p2Name = document.querySelector('.p2Name');
 
 const game = new Game();
 
@@ -13,22 +15,47 @@ function removeAllChildNodes(parent) {
     }
 }
 
-function onCellClick(cellD) {
-    // update data
-    game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
-    // render
-    removeAllChildNodes(p2BoardElem);
-    p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
-    
-    // Player 2 attack and render result
-    let cpuAttack = game.p2.pickRandomTarget(game.p1Gameboard);
-    game.p1Gameboard.recieveAttack(cpuAttack.x, cpuAttack.y);
-    // render
-    removeAllChildNodes(p1BoardElem);
-    p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+function gameOverSetup() {
+    let p1LostState = game.p1Gameboard.areAllShipsSunk();
+    let p2LostState = game.p2Gameboard.areAllShipsSunk();
 
-    updateShipSunkList();
-    console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
+    if (p1LostState && !p2LostState) {
+        // if p1 ships are all sunk, but not p2
+        console.log('p1 lost');
+    }
+    else if (p2LostState && !p1LostState) {
+        // if p2 ships are all sunk, but not p1
+        console.log('p2 lost');
+    } else {
+        // draw
+        console.log('draw');
+    }
+}
+
+function onCellClick(cellD) {
+    if (!game.gameIsOver) {
+        // update data
+        game.p2Gameboard.recieveAttack(cellD.x, cellD.y);
+        // render
+        removeAllChildNodes(p2BoardElem);
+        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick));
+        
+        // Player 2 attack and render result
+        let cpuAttack = game.p2.pickRandomTarget(game.p1Gameboard);
+        game.p1Gameboard.recieveAttack(cpuAttack.x, cpuAttack.y);
+        // render
+        removeAllChildNodes(p1BoardElem);
+        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+    
+        updateShipSunkList();
+        console.log(`clicked cell: ${cellD.x}, ${cellD.y}`);
+    
+        // Check if game is over
+        if (game.p1Gameboard.areAllShipsSunk() || game.p2Gameboard.areAllShipsSunk()) {
+            game.gameIsOver = true;
+            gameOverSetup();
+        }
+    }
 }
 
 function updateShipSunkList() {
@@ -86,9 +113,9 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
                 }
             }
 
-            // if (boardNum == 2 && !cellData.isStruck) {
-            //     cellBGColor = 'darkgrey';
-            // }
+            if (boardNum == 2 && !cellData.isStruck) {
+                cellBGColor = 'darkgrey';
+            }
 
             cellElem.style.backgroundColor = cellBGColor;
             gridContainer.appendChild(cellElem);
@@ -123,5 +150,4 @@ game.p2Gameboard.placeShip(4, 0, 0, true);
 p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
 p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
 updateShipSunkList();
-
 // console.log(game.p1Gameboard.board[0][2]);
