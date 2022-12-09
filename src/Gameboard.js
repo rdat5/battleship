@@ -47,27 +47,31 @@ const Gameboard = (size) => {
 
             if (isVertical)
             {
-                for (let i = 0; i < this.ships[shipIndex].length; i++) {
-                    // check if cells are empty
-                    if (this.getCell(x, y + i).contents) {
-                        isValid = false;
-                    }
-                }
                 // check if out of bounds
-                if (y + shiplength > size - 1) {
+                if (y + shiplength > size) {
                     isValid = false;
+                }
+                else {
+                    for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                        // check if cells are empty
+                        if (this.getCell(x, y + i).contents) {
+                            isValid = false;
+                        }
+                    }
                 }
             }
             else {
-                for (let i = 0; i < this.ships[shipIndex].length; i++) {
-                    // check if cells are empty
-                    if(this.getCell(x + i, y).contents) {
-                        isValid = false;
-                    }
-                }
                 // check if out of bounds
-                if (x + shiplength > size - 1) {
+                if (x + shiplength > size) {
                     isValid = false;
+                }
+                else {
+                    for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                        // check if cells are empty
+                        if(this.getCell(x + i, y).contents) {
+                            isValid = false;
+                        }
+                    }
                 }
             }
 
