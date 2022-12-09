@@ -41,6 +41,38 @@ const Gameboard = (size) => {
                 }
             }
         },
+        isValidPlacement(shipIndex, x, y, isVertical) {
+            let isValid = true;
+            let shiplength = this.ships[shipIndex].length;
+
+            if (isVertical)
+            {
+                for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                    // check if cells are empty
+                    if (this.getCell(x, y + i).contents) {
+                        isValid = false;
+                    }
+                }
+                // check if out of bounds
+                if (y + shiplength > size - 1) {
+                    isValid = false;
+                }
+            }
+            else {
+                for (let i = 0; i < this.ships[shipIndex].length; i++) {
+                    // check if cells are empty
+                    if(this.getCell(x + i, y).contents) {
+                        isValid = false;
+                    }
+                }
+                // check if out of bounds
+                if (x + shiplength > size - 1) {
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        },
         recieveAttack(x, y) {
             if (this.getCell(x, y).contents) {
                 this.getCell(x, y).contents.hit();
