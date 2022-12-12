@@ -9,6 +9,8 @@ const p2Name = document.querySelector('.p2Name');
 
 const game = new Game();
 
+let shipsSuccessfullyPlaced = 0;
+
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
@@ -23,18 +25,18 @@ function gameOverSetup() {
         // if p1 ships are all sunk, but not p2
         p1Name.textContent += ' LOSES';
         p2Name.textContent += ' WINS';
-        console.log('p1 lost');
+        alert('Game over! Player 2 Wins!');
     }
     else if (p2LostState && !p1LostState) {
         // if p2 ships are all sunk, but not p1
         p1Name.textContent += ' WINS';
         p2Name.textContent += ' LOSES';
-        console.log('p2 lost');
+        alert('Game over! Player 1 Wins!');
     } else {
         // draw
         p1Name.textContent += ' DRAWS';
         p2Name.textContent += ' DRAWS';
-        console.log('draw');
+        alert('Game over! Draw!');
     }
 }
 
@@ -138,13 +140,77 @@ function renderBoardGrid(boardNum, gboard, clickFn) {
     return gridContainer;
 };
 
-// Predetermined coordinates before implementing player created ones
-game.p1Gameboard.placeShip(0, 3, 5);
-game.p1Gameboard.placeShip(1, 2, 1);
-game.p1Gameboard.placeShip(2, 1, 6, true);
-game.p1Gameboard.placeShip(3, 8, 1, true);
-game.p1Gameboard.placeShip(4, 5, 7, true);
+function renderShipPlacementGrid() {
+    removeAllChildNodes(p1BoardElem);
+    const gridContainer = document.createElement('div');
+    let boardData = game.p1Gameboard.board;
 
+    let shipVertConfirm = null;
+    
+    if (shipsSuccessfullyPlaced < game.p1Gameboard.ships.length) {
+        shipVertConfirm = confirm(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} units) \n OK = Vertical, Cancel = Horizontal`);
+
+        for (let row = 0; row < boardData.length; row++) {
+            for (let col = 0; col < boardData[row].length; col++) {
+                let cellData = game.p1Gameboard.getCell(col, row);
+                let cellBGColor = '';
+                const cellElem = document.createElement('button');
+    
+                cellElem.style.height = '100%';
+                cellElem.style.borderWidth = '1px';
+                
+                // Color ships
+                if (cellData.contents) {
+                    cellBGColor = 'black';
+                }
+                else {
+                    // add click
+                    cellElem.addEventListener('click', () => {
+                        if (shipsSuccessfullyPlaced < game.p1Gameboard.ships.length) {
+                            if (game.p1Gameboard.isValidPlacement(shipsSuccessfullyPlaced, cellData.x, cellData.y, shipVertConfirm)) {
+                                game.p1Gameboard.placeShip(shipsSuccessfullyPlaced, cellData.x, cellData.y, shipVertConfirm);
+                                shipsSuccessfullyPlaced += 1;
+                            }
+                            else {
+                                alert('Invalid placement! Try again');
+                            }
+                            renderShipPlacementGrid();
+                        }
+                    })
+                }
+    
+                cellElem.style.backgroundColor = cellBGColor;
+                gridContainer.appendChild(cellElem);
+    
+            }
+        }
+    
+        gridContainer.style.display = 'grid';
+        gridContainer.style.gridTemplateRows = `repeat(${game.p1Gameboard.board.length}, 1fr)`;
+        gridContainer.style.gridTemplateColumns = `repeat(${game.p1Gameboard.board[0].length}, 1fr)`;
+        gridContainer.style.width = '100%';
+        gridContainer.style.height = '100%';
+    
+        p1BoardElem.appendChild(gridContainer);
+    }
+    else {
+        alert("Ships placed! Game start!");
+        p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+        p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
+        updateShipSunkList();
+    }
+}
+
+// Predetermined coordinates before implementing player created ones
+// game.p1Gameboard.placeShip(0, 3, 5);
+// game.p1Gameboard.placeShip(1, 2, 1);
+// game.p1Gameboard.placeShip(2, 1, 6, true);
+// game.p1Gameboard.placeShip(3, 8, 1, true);
+// game.p1Gameboard.placeShip(4, 5, 7, true);
+
+// Player placement
+
+// CPU placement
 game.p2Gameboard.placeShip(0, 0, 8);
 game.p2Gameboard.placeShip(1, 3, 3, true);
 game.p2Gameboard.placeShip(2, 8, 0, true);
@@ -153,7 +219,8 @@ game.p2Gameboard.placeShip(4, 0, 0, true);
 
 // Initial Render
 
-p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
-p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
-updateShipSunkList();
-// console.log(game.p1Gameboard.board[0][2]);
+renderShipPlacementGrid();
+
+// p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
+// p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
+// updateShipSunkList();
