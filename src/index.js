@@ -145,10 +145,9 @@ function renderShipPlacementGrid() {
     const gridContainer = document.createElement('div');
     let boardData = game.p1Gameboard.board;
 
-    let shipVertConfirm = null;
-    
     if (shipsSuccessfullyPlaced < game.p1Gameboard.ships.length) {
-        shipVertConfirm = confirm(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} units) \n OK = Vertical, Cancel = Horizontal`);
+        // shipVertConfirm = confirm(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} units) \n OK = Vertical, Cancel = Horizontal`);
+        // alert(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} unit)`);
 
         for (let row = 0; row < boardData.length; row++) {
             for (let col = 0; col < boardData[row].length; col++) {
@@ -167,6 +166,7 @@ function renderShipPlacementGrid() {
                     // add click
                     cellElem.addEventListener('click', () => {
                         if (shipsSuccessfullyPlaced < game.p1Gameboard.ships.length) {
+                            let shipVertConfirm = confirm(`Place ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} vertically? \n OK = Vertical, Cancel = Horizontal`);
                             if (game.p1Gameboard.isValidPlacement(shipsSuccessfullyPlaced, cellData.x, cellData.y, shipVertConfirm)) {
                                 game.p1Gameboard.placeShip(shipsSuccessfullyPlaced, cellData.x, cellData.y, shipVertConfirm);
                                 shipsSuccessfullyPlaced += 1;
@@ -192,6 +192,8 @@ function renderShipPlacementGrid() {
         gridContainer.style.height = '100%';
     
         p1BoardElem.appendChild(gridContainer);
+
+        alert(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} unit)`);
     }
     else {
         alert("Ships placed! Game start!");
