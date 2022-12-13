@@ -146,8 +146,6 @@ function renderShipPlacementGrid() {
     let boardData = game.p1Gameboard.board;
 
     if (shipsSuccessfullyPlaced < game.p1Gameboard.ships.length) {
-        // shipVertConfirm = confirm(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} units) \n OK = Vertical, Cancel = Horizontal`);
-        // alert(`Placing ${game.p1Gameboard.ships[shipsSuccessfullyPlaced].shipName} (${game.p1Gameboard.ships[shipsSuccessfullyPlaced].length} unit)`);
 
         for (let row = 0; row < boardData.length; row++) {
             for (let col = 0; col < boardData[row].length; col++) {
@@ -203,15 +201,6 @@ function renderShipPlacementGrid() {
     }
 }
 
-// Predetermined coordinates before implementing player created ones
-// game.p1Gameboard.placeShip(0, 3, 5);
-// game.p1Gameboard.placeShip(1, 2, 1);
-// game.p1Gameboard.placeShip(2, 1, 6, true);
-// game.p1Gameboard.placeShip(3, 8, 1, true);
-// game.p1Gameboard.placeShip(4, 5, 7, true);
-
-// Player placement
-
 // CPU placement
 game.p2Gameboard.placeShip(0, 0, 8);
 game.p2Gameboard.placeShip(1, 3, 3, true);
@@ -222,7 +211,3 @@ game.p2Gameboard.placeShip(4, 0, 0, true);
 // Initial Render
 
 renderShipPlacementGrid();
-
-// p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
-// p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
-// updateShipSunkList();
