@@ -86,6 +86,27 @@ const Gameboard = (size) => {
         areAllShipsSunk() {
             return this.ships.every(ship => ship.isSunk());
         },
+        randomlyPlaceShips() {
+            for (let i = 0; i < this.ships.length; i++) {
+                // get random cell
+                let randomCellx = Math.floor(Math.random() * size);
+                let randomCelly = Math.floor(Math.random() * size);
+                let randomVert = Math.random() < 0.5;
+
+                // if randomly picked cell is invalid, get new randomcell
+                while(!this.isValidPlacement(i, randomCellx, randomCelly, randomVert)) {
+                    randomCellx = Math.floor(Math.random() * size);
+                    randomCelly = Math.floor(Math.random() * size);
+                    randomVert = Math.random() < 0.5;
+                }
+                this.placeShip(i, randomCellx, randomCelly, randomVert);
+            }
+
+            // for (let j = 0; j < 100; j++) {
+
+            //     console.log(Math.floor(Math.random() * 10));
+            // }
+        },
         printBoard() {
             let finalString = "";
             for (let i = 0; i < this.board.length; i++) {

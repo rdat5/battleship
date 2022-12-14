@@ -195,6 +195,7 @@ function renderShipPlacementGrid() {
     }
     else {
         alert("Ships placed! Game start!");
+        game.p2Gameboard.randomlyPlaceShips();
         p1BoardElem.appendChild(renderBoardGrid(1, game.p1Gameboard, onCellClick));
         p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
         updateShipSunkList();
@@ -202,12 +203,14 @@ function renderShipPlacementGrid() {
 }
 
 // CPU placement
-game.p2Gameboard.placeShip(0, 0, 8);
-game.p2Gameboard.placeShip(1, 3, 3, true);
-game.p2Gameboard.placeShip(2, 8, 0, true);
-game.p2Gameboard.placeShip(3, 7, 7, false);
-game.p2Gameboard.placeShip(4, 0, 0, true);
+// game.p2Gameboard.placeShip(0, 0, 8);
+// game.p2Gameboard.placeShip(1, 3, 3, true);
+// game.p2Gameboard.placeShip(2, 8, 0, true);
+// game.p2Gameboard.placeShip(3, 7, 7, false);
+// game.p2Gameboard.placeShip(4, 0, 0, true);
 
-// Initial Render
-
+// Start game
 renderShipPlacementGrid();
+// game.p2Gameboard.randomlyPlaceShips();
+// p2BoardElem.appendChild(renderBoardGrid(2, game.p2Gameboard, onCellClick, true));
+// updateShipSunkList();
