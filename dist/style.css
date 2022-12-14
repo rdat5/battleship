@@ -1,8 +1,9 @@
 * {
     box-sizing: border-box;
+    color: #fffffe;
 }
 body {
-    background: #e4e4e4;
+    background: ;
     padding: 5px;
     height: 100vh;
     margin: 0;
@@ -24,11 +25,11 @@ body {
 }
 
 .page-header {
-    background-color: #ffcdd2;
+    background-color: #232946;
 }
 
 .page-main {
-    background-color: #dcedc8;
+    background-color: #232946;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,11 +50,14 @@ body {
 }
 
 .p1Container {
-    background-color: lightseagreen;
+    background-color: #eebbc3;
+}
+.p1Container > *, .p2Container > * {
+    color: #121629;
 }
 
 .p2Container {
-    background-color: gray;
+    background-color: #b8c1ec;
 }
 
 .p1Board, .p2Board {
@@ -62,10 +66,10 @@ body {
     position: relative;
 }
 .p1Board {
-    background-color: pink;
+    background-color: #eebbc3;
 }
 .p2Board {
-    background-color: lightblue;
+    background-color: #b8c1ec;
 }
 
 .shipSunkContainer {
@@ -75,7 +79,10 @@ body {
 .shipSunkContainer p {
     text-align: center;
 }
+.shipSunkContainer > * {
+    color: #121629;
+}
 
 .page-footer {
-    background-color: #ffecb3;
+    background-color: #121629;
 }
